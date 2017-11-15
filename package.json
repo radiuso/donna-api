@@ -1,0 +1,19 @@
+{
+  "name": "donna-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/radiuso/donna-api.git",
+  "author": "Radiuso <thomas.vandermeersch.21@gmail.com>",
+  "license": "ISC",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "nodemon": "^1.12.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-plugin-node": "^5.2.1"
+  }
+}
