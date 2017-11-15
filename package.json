@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/radiuso/donna-api.git",
-  "author": "Radiuso <thomas.vandermeersch.21@gmail.com>",
+  "author": "Radiuso <radiuso@gmail.com>",
   "license": "ISC",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:dev": "cross-env NODE_ENV=dev nodemon index.js"
   },
   "dependencies": {
     "express": "^4.16.2",
