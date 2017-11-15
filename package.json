@@ -7,11 +7,12 @@
   "license": "ISC",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "cross-env NODE_ENV=dev nodemon index.js"
+    "start:dev": "cross-env NODE_ENV=development nodemon index.js"
   },
   "dependencies": {
     "express": "^4.16.2",
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "winston": "next"
   },
   "devDependencies": {
     "eslint": "^4.11.0",
