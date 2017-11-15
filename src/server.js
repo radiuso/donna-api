@@ -6,6 +6,6 @@ const app = express();
 // create routes
 initRoutes(app);
 
-app.listen(3000, function () {
+app.listen(3000, () => {
   console.log('donna api is listening on port 3000!')
 });

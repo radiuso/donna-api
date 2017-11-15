@@ -1,24 +1,33 @@
 
-module.exports.index = function(req, res) {
+const index = (req, res) => {
   return res.json('Hi there');
 };
 
-module.exports.show = function(req, res) {
+const show = (req, res) => {
   throw new Error('Not implemented yet');
 };
 
-module.exports.create = function(req, res) {
+const create = (req, res) => {
   throw new Error('Not implemented yet');
 };
 
-module.exports.upsert = function(req, res) {
+const upsert = (req, res) => {
   throw new Error('Not implemented yet');
 };
 
-module.exports.patch = function(req, res) {
+const patch = (req, res) => {
   throw new Error('Not implemented yet');
 };
 
-module.exports.destroy = function(req, res) {
+const destroy = (req, res) => {
   throw new Error('Not implemented yet');
+};
+
+module.exports = {
+  index,
+  show,
+  create,
+  upsert,
+  patch,
+  destroy,
 };
