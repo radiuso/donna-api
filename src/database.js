@@ -9,7 +9,13 @@ const db = {
   sequelize: new Sequelize(database, user, password, options),
 };
 
-// Insert models below
 db.User = db.sequelize.import('user', User);
+
+// association
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
 
 module.exports = db;
