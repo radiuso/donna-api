@@ -1,6 +1,11 @@
+const usersService = require('./usersService');
 
 const index = (req, res) => {
-  return res.json('Hi there');
+  usersService.findAll().then((users) => {
+    return res.json({
+      users,
+    });
+  });
 };
 
 const show = (req, res) => {
