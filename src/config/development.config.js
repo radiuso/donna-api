@@ -4,6 +4,7 @@ module.exports = {
       host: 'localhost',
       dialect: 'sqlite',
       storage: '/data/donna.db',
+      logging: true,
     }
   },
 };
