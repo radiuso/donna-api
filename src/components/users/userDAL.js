@@ -1,12 +1,26 @@
 const { User } = require('../../database');
 
-module.exports.findAll = () => User.findAll();
-module.exports.findById = (id) => User.findById(id);
-
-module.exports.findAllByIds = (ids) => User.findAll({
+const findAll = () => User.findAll();
+const findById = (id) => User.findById(id);
+const findAllByIds = (ids) => User.findAll({
   where: {
     id: ids,
   },
 });
 
-module.exports.create = (user) => User.create(user);
+// create a user
+const create = (user) => User.create(user);
+
+// update the user and return all fields from db
+const update = (id, user) => User.update(user, {
+  where: {
+    id,
+  },
+}).then(() => findById(id));
+
+module.exports = {
+  findAll,
+  findAllByIds,
+  create,
+  update,
+};

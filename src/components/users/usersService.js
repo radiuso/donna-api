@@ -1,10 +1,18 @@
 const DataLoader = require('dataloader');
 const userDAL = require('./userDAL');
 
-module.exports.findAll = () => userDAL.findAll();
+const findAll = () => userDAL.findAll();
 
-module.exports.findByIdLoader = new DataLoader(
+const findByIdLoader = new DataLoader(
   (ids) => userDAL.findAllByIds(ids)
 );
 
-module.exports.create = (user) => userDAL.create(user);
+const create = (user) => userDAL.create(user);
+const update = (id, user) => userDAL.update(id, user);
+
+module.exports = {
+  findAll,
+  findByIdLoader,
+  create,
+  update,
+};

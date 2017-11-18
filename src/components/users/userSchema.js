@@ -10,7 +10,6 @@ const userSchema = {
     }
 
     input UserInput {
-      id: Int
       firstName: String!
       lastName: String!
     }
@@ -20,7 +19,8 @@ const userSchema = {
     user(id: Int!): User
   `,
   mutation: `
-    createUser(user: UserInput): User
+    createUser(user: UserInput!): User
+    updateUser(id: Int!, user: UserInput!): User
   `,
   resolvers: {
     User: {
@@ -32,6 +32,7 @@ const userSchema = {
     },
     Mutation: {
       createUser: (obj, { user }, context) => userService.create(user),
+      updateUser: (obj, { id, user }, context) => userService.update(id, user),
     },
   },
 };
