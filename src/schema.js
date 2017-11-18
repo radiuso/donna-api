@@ -3,9 +3,19 @@ const objectAssignDeep = require('object-assign-deep');
 
 const UserSchema = require('./components/users/userSchema');
 
-const RootQuery = `
+const SchemaDefinition = `
+  schema {
+    query: Query
+    mutation: Mutation
+  }
+
   type Query {
     version: String!
+    ${UserSchema.query}
+  }
+
+  type Mutation {
+    ${UserSchema.mutation}
   }
 `;
 
@@ -16,16 +26,14 @@ const RootResolvers = {
   }
 }
 
-const SchemaDefinition = `
-  schema {
-    query: Query
-  }
-`;
+const resolvers = objectAssignDeep({},
+  RootResolvers,
+  UserSchema.resolvers
+);
 
-const rootTypeDefs = [SchemaDefinition, RootQuery];
-
-const resolvers = objectAssignDeep({}, RootResolvers, UserSchema.resolvers);
-const typeDefs = rootTypeDefs.concat(UserSchema.typeDefs);
+const typeDefs = [SchemaDefinition].concat(
+  UserSchema.typeDefs
+);
 
 module.exports = makeExecutableSchema({
   typeDefs,
