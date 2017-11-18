@@ -1,14 +1,17 @@
+const faker = require('faker');
 const logger = require ('../../helpers/logger');
 const { User } = require('../../database');
 
 const createElements = (numberOfElements) => {
-  const elements = [{
-    firstName: 'John@doe.com',
-    lastName: 'test',
-  }, {
-    firstName: 'a@a.com',
-    lastName: 'test',
-  }];
+  const elements = [];
+
+  for(let i = 0; i < numberOfElements; ++i) {
+    elements.push({
+      id: i + 1,
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+    });
+  }
 
   return User.bulkCreate(elements)
   .then(() => {
