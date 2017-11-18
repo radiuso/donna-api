@@ -1,39 +1,33 @@
-const {
-  GraphQLList,
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLSchema,
-} = require('graphql');
+const { makeExecutableSchema } = require('graphql-tools');
+const objectAssignDeep = require('object-assign-deep');
 
-const { User, Order } = require('./database');
+const UserSchema = require('./components/users/userSchema');
 
-const UserType = require('./components/users/userType');
-const OrderType = require('./components/orders/orderType');
-const CustomerType = require('./components/customers/customerType');
+const RootQuery = `
+  type Query {
+    version: String!
+  }
+`;
 
-const UserQueryRootType = new GraphQLObjectType({
-  name: 'UserAppSchema',
-  description: "User Application Schema Query Root",
-  fields: () => ({
-    users: {
-      type: new GraphQLList(UserType),
-      description: "List of all Users",
-      resolve: function() {
-        return User.findAll();
-      }
-    },
-    orders: {
-      type: new GraphQLList(OrderType),
-      description: 'List of all orders',
-      resolve: function() {
-        return Order.findAll();
-      }
-    },
-  })
+// TODO read the version from the config
+const RootResolvers = {
+  Query: {
+    version: () => '0.1',
+  }
+}
+
+const SchemaDefinition = `
+  schema {
+    query: Query
+  }
+`;
+
+const rootTypeDefs = [SchemaDefinition, RootQuery];
+
+const resolvers = objectAssignDeep({}, RootResolvers, UserSchema.resolvers);
+const typeDefs = rootTypeDefs.concat(UserSchema.typeDefs);
+
+module.exports = makeExecutableSchema({
+  typeDefs,
+  resolvers,
 });
-
-const UserAppSchema = new GraphQLSchema({
-  query: UserQueryRootType
-});
-
-module.exports = UserAppSchema;

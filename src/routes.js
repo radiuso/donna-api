@@ -1,7 +1,12 @@
-const usersAPI = require('./components/users/usersAPI');
+const graphqlHTTP = require('express-graphql');
+const schema = require('./schema');
 
 module.exports = (app) => {
-  app.use('/api/users', usersAPI);
+  // init graphql route
+  app.use('/graphapi', graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+  }));
 
   // if no route match, return 404
   app.route('/*').get((req, res) => {

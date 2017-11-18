@@ -4,7 +4,7 @@
  * @param {*} DataTypes
  */
 module.exports = function(sequelize, DataTypes) {
-  const User = sequelize.define('user', {
+  const UserModel = sequelize.define('user', {
     firstName: {
       type: DataTypes.STRING
     },
@@ -13,5 +13,5 @@ module.exports = function(sequelize, DataTypes) {
     },
   });
 
-  return User;
+  return UserModel;
 }
