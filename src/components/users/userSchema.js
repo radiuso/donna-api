@@ -20,11 +20,13 @@ const mutationResolvers = {
 };
 
 module.exports = {
-  query: userQuery,
-  mutation: userMutation,
+  query: {
+    type: userQuery,
+    resolvers: queryResolvers,
+  },
+  mutation: {
+    type: userMutation,
+    resolvers: mutationResolvers,
+  },
   typeDefs: [UserType],
-  resolvers: {
-    Query: queryResolvers,
-    Mutation: mutationResolvers,
-  }
 };

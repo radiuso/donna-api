@@ -11,11 +11,11 @@ const SchemaDefinition = `
 
   type Query {
     version: String!
-    ${UserSchema.query}
+    ${UserSchema.query.type}
   }
 
   type Mutation {
-    ${UserSchema.mutation}
+    ${UserSchema.mutation.type}
   }
 `;
 
@@ -26,9 +26,17 @@ const RootResolvers = {
   }
 }
 
+// build resolvers from schema
+const getSchemaResolvers = (schema) => {
+  return {
+    Query: schema.query.resolvers,
+    Mutation: schema.mutation.resolvers,
+  };
+}
+
 const resolvers = objectAssignDeep({},
   RootResolvers,
-  UserSchema.resolvers
+  getSchemaResolvers(UserSchema)
 );
 
 const typeDefs = [SchemaDefinition].concat(
