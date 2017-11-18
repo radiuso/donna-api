@@ -3,9 +3,14 @@ const logger = require ('../../helpers/logger');
 const { User } = require('../../database');
 
 const createElements = (numberOfElements) => {
-  const elements = [];
+  // always create admin user
+  const elements = [{
+    id: 1,
+    firstName: 'admin',
+    lastName: 'admin',
+  }];
 
-  for(let i = 0; i < numberOfElements; ++i) {
+  for(let i = 1; i < numberOfElements; ++i) {
     elements.push({
       id: i + 1,
       firstName: faker.name.firstName(),
@@ -18,7 +23,6 @@ const createElements = (numberOfElements) => {
     logger.info(`${numberOfElements} Users inserted`);
   });
 };
-
 
 const usersSeed = ({ truncate, numberOfElements }) => {
   if (truncate) {
