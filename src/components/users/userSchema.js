@@ -4,12 +4,14 @@ const userSchema = {
   definition: `
     type User {
       id: Int!
+      email: String
       firstName: String
       lastName: String
       fullName: String
     }
 
     input UserInput {
+      email: String!
       firstName: String!
       lastName: String!
     }

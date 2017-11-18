@@ -6,6 +6,7 @@ const createElements = (numberOfElements) => {
   // always create admin user
   const elements = [{
     id: 1,
+    email: 'admin@donna.com',
     firstName: 'admin',
     lastName: 'admin',
   }];
@@ -13,6 +14,7 @@ const createElements = (numberOfElements) => {
   for(let i = 1; i < numberOfElements; ++i) {
     elements.push({
       id: i + 1,
+      email: faker.internet.email(),
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
     });
