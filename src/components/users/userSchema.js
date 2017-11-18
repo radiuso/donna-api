@@ -1,5 +1,5 @@
 const UserType = require('./userType');
-const { findAll, findOne } = require('./usersService');
+const { findAll, findByIdLoader } = require('./usersService');
 
 const UserQuery = `
 extend type Query {
@@ -10,7 +10,7 @@ extend type Query {
 
 const queryResolvers = {
   users: () => findAll(),
-  user: (obj, { id }, context) => findOne(id),
+  user: (obj, { id }, context) => findByIdLoader.load(id),
 };
 
 module.exports = {
