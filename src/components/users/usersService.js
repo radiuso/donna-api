@@ -1,18 +1,27 @@
 const DataLoader = require('dataloader');
-const userDAL = require('./userDAL');
+const usersDAL = require('./usersDAL');
 
-const findAll = () => userDAL.findAll();
+class UsersService {
+  findAll() {
+    return usersDAL.findAll();
+  }
 
-const findByIdLoader = new DataLoader(
-  (ids) => userDAL.findAllByIds(ids)
-);
+  findByIdLoader() {
+    return new DataLoader(
+      (ids) => usersDAL.findAllByIds(ids)
+    );
+  }
 
-const create = (user) => userDAL.create(user);
-const update = (id, user) => userDAL.update(id, user);
+  create(user) {
+    return usersDAL.create(user);
+  }
 
-module.exports = {
-  findAll,
-  findByIdLoader,
-  create,
-  update,
-};
+  // update the user and return all the object from the db
+  update(id, user) {
+    return usersDAL
+      .update(id, user)
+      .then(() => usersDAL.findById(id));
+  }
+}
+
+module.exports = new UsersService();
