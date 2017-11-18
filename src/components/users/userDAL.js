@@ -8,3 +8,5 @@ module.exports.findAllByIds = (ids) => User.findAll({
     id: ids,
   },
 });
+
+module.exports.create = (user) => User.create(user);

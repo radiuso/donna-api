@@ -1,32 +1,40 @@
-const UserType = require('./userType');
-const { findAll, findByIdLoader, save } = require('./usersService');
+const userService = require('./usersService');
 
-// queries
-const userQuery = `
-  users: [User]!
-  user(id: Int!): User
-`;
-const queryResolvers = {
-  users: () => findAll(),
-  user: (obj, { id }, context) => findByIdLoader.load(id),
-};
+const userSchema = {
+  definition: `
+    type User {
+      id: Int!
+      firstName: String
+      lastName: String
+      fullName: String
+    }
 
-// mutations
-const userMutation = `
-  createUser(lastName: String!, firstName: String!): User
-`;
-const mutationResolvers = {
-  createUser: (obj, data, context) => save(data),
-};
-
-module.exports = {
-  query: {
-    type: userQuery,
-    resolvers: queryResolvers,
+    input UserInput {
+      id: Int
+      firstName: String!
+      lastName: String!
+    }
+  `,
+  query: `
+    users: [User]!
+    user(id: Int!): User
+  `,
+  mutation: `
+    createUser(user: UserInput): User
+  `,
+  resolvers: {
+    User: {
+      fullName: (user) => `${user.lastName} ${user.firstName}`,
+    },
+    Query: {
+      users: () => userService.findAll(),
+      user: (obj, { id }, context) => userService.findByIdLoader.load(id),
+    },
+    Mutation: {
+      createUser: (obj, { user }, context) => userService.create(user),
+    },
   },
-  mutation: {
-    type: userMutation,
-    resolvers: mutationResolvers,
-  },
-  typeDefs: [UserType],
 };
+
+
+module.exports = userSchema;

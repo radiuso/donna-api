@@ -11,12 +11,14 @@ const SchemaDefinition = `
 
   type Query {
     version: String!
-    ${UserSchema.query.type}
+    ${UserSchema.query}
   }
 
   type Mutation {
-    ${UserSchema.mutation.type}
+    ${UserSchema.mutation}
   }
+
+  ${UserSchema.definition}
 `;
 
 // TODO read the version from the config
@@ -26,24 +28,12 @@ const RootResolvers = {
   }
 }
 
-// build resolvers from schema
-const getSchemaResolvers = (schema) => {
-  return {
-    Query: schema.query.resolvers,
-    Mutation: schema.mutation.resolvers,
-  };
-}
-
 const resolvers = objectAssignDeep({},
   RootResolvers,
-  getSchemaResolvers(UserSchema)
-);
-
-const typeDefs = [SchemaDefinition].concat(
-  UserSchema.typeDefs
+  UserSchema.resolvers
 );
 
 module.exports = makeExecutableSchema({
-  typeDefs,
-  resolvers,
+  typeDefs: SchemaDefinition,
+  resolvers: resolvers,
 });

@@ -6,3 +6,5 @@ module.exports.findAll = () => userDAL.findAll();
 module.exports.findByIdLoader = new DataLoader(
   (ids) => userDAL.findAllByIds(ids)
 );
+
+module.exports.create = (user) => userDAL.create(user);
