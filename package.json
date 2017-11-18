@@ -7,11 +7,13 @@
   "license": "ISC",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "cross-env NODE_ENV=development nodemon index.js"
+    "start:dev": "cross-env NODE_ENV=development nodemon index.js",
+    "seed": "cross-env NODE_ENV=development node ./src/seeder.js"
   },
   "dependencies": {
     "express": "^4.16.2",
     "express-graphql": "^0.6.11",
+    "faker": "^4.1.0",
     "graphql": "^0.11.7",
     "graphql-tools": "^2.8.0",
     "nodemon": "^1.12.1",

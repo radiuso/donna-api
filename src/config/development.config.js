@@ -6,4 +6,10 @@ module.exports = {
       storage: '/data/donna.db',
     }
   },
+  seed: {
+    users: {
+      truncate: true,
+      numberOfElements: 10,
+    }
+  },
 };

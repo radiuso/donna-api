@@ -9,4 +9,7 @@ module.exports = {
       operatorsAliases: false,
     }
   },
+  seed: {
+
+  }
 };
