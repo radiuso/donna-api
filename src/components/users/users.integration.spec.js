@@ -46,4 +46,32 @@ describe('User integration', () => {
         expect(response.body).to.have.deep.equals(expected);
       });
   });
+
+  it('Should create Han Solo user', () => {
+    const query = `mutation {
+      createUser(user: {
+        firstName: "Han",
+        lastName: "Solo",
+        email: "han.solo@starwars.com"
+      }) {
+        user { firstName, lastName, email }
+      }
+    }`;
+    const expected = {
+      "createUser": {
+        "user": {
+          firstName: "Han",
+          lastName: "Solo",
+          email: "han.solo@starwars.com",
+        },
+      },
+    };
+
+    return integrationServer
+      .graphqlQuery(app, query)
+      .then((response) => {
+        expect(response.statusCode).to.equal(200);
+        expect(response.body).to.have.deep.equals(expected);
+      });
+  });
 });

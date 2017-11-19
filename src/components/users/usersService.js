@@ -13,8 +13,10 @@ class UsersService {
     );
   }
 
+  // create a user and return the user payload
   create(user) {
     return usersDAL.create(user)
+      .then((user) => { return { user } })
       .catch(validationErrorHandler);
   }
 
