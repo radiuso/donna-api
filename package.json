@@ -2,7 +2,7 @@
   "name": "donna-api",
   "version": "1.0.0",
   "engines": {
-      "node": ">=6.0.0"
+    "node": ">=8.9.0"
   },
   "main": "index.js",
   "repository": "https://github.com/radiuso/donna-api.git",
