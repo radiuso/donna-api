@@ -10,6 +10,10 @@ const userSchema = {
       fullName: String
     }
 
+    type UserPayload {
+      user: User
+    }
+
     input UserInput {
       email: String!
       firstName: String!
@@ -21,8 +25,8 @@ const userSchema = {
     user(id: Int!): User
   `,
   mutation: `
-    createUser(user: UserInput!): User
-    updateUser(id: Int!, user: UserInput!): User
+    createUser(user: UserInput!): UserPayload
+    updateUser(id: Int!, user: UserInput!): UserPayload
   `,
   resolvers: {
     User: {

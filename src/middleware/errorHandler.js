@@ -1,8 +1,7 @@
 const logger = require('../helpers/logger');
 
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res) => {
   const statusCode = err.statusCode || 500;
-
   logger.error(err.stack);
 
   if (req.app.get('env') !== 'development') {
@@ -11,8 +10,9 @@ const errorHandler = (err, req, res, next) => {
 
   res.status(statusCode).json({ error: {
     code: statusCode,
-    message: err.message,
+    message: err.errors,
     stack: err.stack,
+    error: err.errors,
   }});
 };
 

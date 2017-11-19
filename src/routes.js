@@ -6,6 +6,12 @@ module.exports = (app) => {
   app.use('/graphapi', graphqlHTTP({
     schema: schema,
     graphiql: true,
+    formatError: error => ({
+      message: error.message,
+      state: error.originalError && error.originalError.state,
+      locations: error.locations,
+      path: error.path,
+    }),
   }));
 
   // if no route match, return 404
