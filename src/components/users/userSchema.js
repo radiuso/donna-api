@@ -34,7 +34,7 @@ const userSchema = {
     },
     Query: {
       users: () => userService.findAll(),
-      user: (obj, { id }) => userService.findByIdLoader.load(id),
+      user: (obj, { id }) => userService.findByIdLoader().load(id),
     },
     Mutation: {
       createUser: (obj, { user }) => userService.create(user),

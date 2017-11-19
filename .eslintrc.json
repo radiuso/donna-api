@@ -1,8 +1,9 @@
 {
     "env": {
-        "node": true
+        "node": true,
+        "mocha": true
     },
-    "plugins": ["node"],
+    "plugins": ["node", "mocha"],
     "extends": ["eslint:recommended", "plugin:node/recommended"],
     "rules": {
         "node/exports-style": ["error", "module.exports"],
