@@ -1,4 +1,3 @@
-'use strict'
 const userService = require('./usersService');
 
 const userSchema = {
