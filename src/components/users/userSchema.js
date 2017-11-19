@@ -1,3 +1,4 @@
+'use strict'
 const userService = require('./usersService');
 
 const userSchema = {
@@ -30,11 +31,11 @@ const userSchema = {
     },
     Query: {
       users: () => userService.findAll(),
-      user: (obj, { id }, context) => userService.findByIdLoader.load(id),
+      user: (obj, { id }) => userService.findByIdLoader.load(id),
     },
     Mutation: {
-      createUser: (obj, { user }, context) => userService.create(user),
-      updateUser: (obj, { id, user }, context) => userService.update(id, user),
+      createUser: (obj, { user }) => userService.create(user),
+      updateUser: (obj, { id, user }) => userService.update(id, user),
     },
   },
 };

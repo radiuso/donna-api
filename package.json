@@ -1,6 +1,9 @@
 {
   "name": "donna-api",
   "version": "1.0.0",
+  "engines": {
+      "node": ">=6.0.0"
+  },
   "main": "index.js",
   "repository": "https://github.com/radiuso/donna-api.git",
   "author": "Radiuso <radiuso@gmail.com>",
