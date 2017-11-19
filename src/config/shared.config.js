@@ -1,4 +1,8 @@
 module.exports = {
+  env: 'production',
+  server: {
+    port: 3000,
+  },
   db: {
     options: {
       host: '',
@@ -9,7 +13,5 @@ module.exports = {
       operatorsAliases: false,
     }
   },
-  seed: {
-
-  }
+  seed: {}
 };

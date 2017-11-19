@@ -1,4 +1,4 @@
-const integrationServer = require("../../helpers/integrationServer");
+const integrationServer = require("../../tests/integrationServer");
 const { expect } = require('chai');
 
 describe('User integration', () => {

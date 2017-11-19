@@ -2,11 +2,15 @@ const express = require('express');
 const { graphql } = require('graphql');
 const request = require('request-promise');
 
+const config = require('../config');
 const rootSchema = require('../schema');
+const seed = require('../helpers/seed');
+const logger = require('../helpers/logger');
 
-function start(done, appPort) {
+function start(done) {
+  const { port } = config.server;
+
   const app = express();
-  const PORT = appPort || 9000;
 
   app.get('/graphql', (req, res) => {
     const graphqlQuery = req.query.graphqlQuery;
@@ -17,12 +21,14 @@ function start(done, appPort) {
     return graphql(rootSchema, graphqlQuery)
       .then(response => response.data)
       .then((data) => res.json(data))
-      .catch((err) => console.error(err));
+      .catch((err) => logger.error(err));
   });
 
-  return app.listen(PORT, () => {
-    console.log('Server started at port [%s]', PORT);
-    done();
+  return app.listen(port, () => {
+    return seed().then(() => {
+      logger.info('Server started at port [%s]', port)
+      done();
+    });
   });
 }
 
