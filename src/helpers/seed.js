@@ -1,13 +1,15 @@
 const config = require('../config');
 const db = require('../database');
-const usersSeed = require('../components/users/usersSeed');
 const logger = require('./logger');
+const usersSeed = require('../components/users/usersSeed');
+const customersSeed = require('../components/customers/customersSeed');
 
 const seed = () => {
   // Independent seeds first
   return db.sequelize.sync()
     .then(() => Promise.all([
       usersSeed(config.seed.users),
+      customersSeed(config.seed.customers),
     ]))
     .then(() => {
       // More seeds that require IDs from the seeds above

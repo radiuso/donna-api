@@ -8,4 +8,4 @@ This api is built to provide basic data to be able to handle orders.
 * GraphQL (api)
 * Sequelize (db)
 * Winston (logger)
-* Faker (seeder)
+* Faker (seed fake data)

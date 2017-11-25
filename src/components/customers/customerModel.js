@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
     street: {
       type: DataTypes.STRING,
     },
-    postcode: {
+    zipCode: {
       type: DataTypes.STRING,
     }
   });

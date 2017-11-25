@@ -12,6 +12,10 @@ module.exports = {
     users: {
       truncate: true,
       numberOfElements: 10,
-    }
+    },
+    customers: {
+      truncate: true,
+      numberOfElements: 30,
+    },
   },
 };
