@@ -45,7 +45,7 @@ class UserSchema extends BaseSchema {
       },
       Query: {
         users: () => usersService.findAll(),
-        user: (obj, { id }) => usersService.findByIdLoader().load(id),
+        user: (obj, { id }) => usersService.findByIdLoader.load(id),
       },
       Mutation: {
         createUser: (obj, { user }) => usersService.create(user),
