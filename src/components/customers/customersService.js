@@ -3,14 +3,14 @@ const customersDAL = require('./customersDAL');
 const validationErrorHandler = require('../../helpers/validationErrorHandler');
 
 class CustomersService {
-  findAll() {
-    return customersDAL.findAll();
-  }
-
-  findByIdLoader() {
-    return new DataLoader(
+  constructor() {
+    this.findByIdLoader = new DataLoader(
       (ids) => customersDAL.findAllByIds(ids)
     );
+  }
+
+  findAll() {
+    return customersDAL.findAll();
   }
 
   // create a customer and return the customer payload

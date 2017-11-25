@@ -1,4 +1,5 @@
 const ordersService = require('./ordersService');
+const customersService = require('../customers/customersService');
 
 const orderSchema = {
   definition: `
@@ -6,6 +7,7 @@ const orderSchema = {
       id: Int!
       targetDate: Date
       status: Int!
+      customer: Customer
     }
 
     type OrderPayload {
@@ -15,6 +17,7 @@ const orderSchema = {
     input OrderInput {
       targetDate: Date
       status: Int!
+      customerId: Int!
     }
   `,
   query: `
@@ -27,10 +30,11 @@ const orderSchema = {
   `,
   resolvers: {
     Order: {
+      customer: (obj) => customersService.findByIdLoader.load(obj.customerId),
     },
     Query: {
       orders: () => ordersService.findAll(),
-      order: (obj, { id }) => ordersService.findByIdLoader().load(id),
+      order: (obj, { id }) => ordersService.findByIdLoader.load(id),
     },
     Mutation: {
       createOrder: (obj, { order }) => ordersService.create(order),

@@ -3,14 +3,14 @@ const usersDAL = require('./usersDAL');
 const validationErrorHandler = require('../../helpers/validationErrorHandler');
 
 class UsersService {
-  findAll() {
-    return usersDAL.findAll();
-  }
-
-  findByIdLoader() {
-    return new DataLoader(
+  constructor() {
+    this.findByIdLoader = new DataLoader(
       (ids) => usersDAL.findAllByIds(ids)
     );
+  }
+
+  findAll() {
+    return usersDAL.findAll();
   }
 
   // create a user and return the user payload

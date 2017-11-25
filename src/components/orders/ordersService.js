@@ -3,14 +3,14 @@ const ordersDAL = require('./ordersDAL');
 const validationErrorHandler = require('../../helpers/validationErrorHandler');
 
 class OrdersService {
-  findAll() {
-    return ordersDAL.findAll();
-  }
-
-  findByIdLoader() {
-    return new DataLoader(
+  constructor() {
+    this.findByIdLoader = new DataLoader(
       (ids) => ordersDAL.findAllByIds(ids)
     );
+  }
+
+  findAll() {
+    return ordersDAL.findAll();
   }
 
   // create a order and return the order payload
