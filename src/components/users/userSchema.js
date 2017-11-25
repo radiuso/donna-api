@@ -1,4 +1,4 @@
-const userService = require('./usersService');
+const usersService = require('./usersService');
 
 const userSchema = {
   definition: `
@@ -33,12 +33,12 @@ const userSchema = {
       fullName: (user) => `${user.lastName} ${user.firstName}`,
     },
     Query: {
-      users: () => userService.findAll(),
-      user: (obj, { id }) => userService.findByIdLoader().load(id),
+      users: () => usersService.findAll(),
+      user: (obj, { id }) => usersService.findByIdLoader().load(id),
     },
     Mutation: {
-      createUser: (obj, { user }) => userService.create(user),
-      updateUser: (obj, { id, user }) => userService.update(id, user),
+      createUser: (obj, { user }) => usersService.create(user),
+      updateUser: (obj, { id, user }) => usersService.update(id, user),
     },
   },
 };
