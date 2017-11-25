@@ -5,7 +5,7 @@ const { Customer } = require('../../database');
 const createElements = (numberOfElements) => {
   const elements = [];
 
-  for(let i = 1; i < numberOfElements; ++i) {
+  for(let i = 0; i < numberOfElements; ++i) {
     elements.push({
       id: i + 1,
       firstName: faker.name.firstName(),
