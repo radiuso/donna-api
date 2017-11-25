@@ -1,32 +1,9 @@
+const BaseDAL = require('../base_component/BaseDAL');
 const { Customer } = require('../../database');
 
-class CustomersDAL {
-  findAll() {
-    return Customer.findAll();
-  }
-
-  findById(id) {
-    return Customer.findById(id);
-  }
-
-  findAllByIds(ids) {
-    return Customer.findAll({
-      where: {
-        id: ids,
-      },
-    });
-  }
-
-  create(user) {
-    return Customer.create(user);
-  }
-
-  update(id, user) {
-    return Customer.update(user, {
-      where: {
-        id,
-      },
-    });
+class CustomersDAL extends BaseDAL {
+  constructor() {
+    super(Customer);
   }
 }
 
