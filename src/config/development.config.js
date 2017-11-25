@@ -17,5 +17,9 @@ module.exports = {
       truncate: true,
       numberOfElements: 30,
     },
+    orders: {
+      truncate: true,
+      numberOfElements: 100,
+    },
   },
 };

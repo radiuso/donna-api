@@ -8,12 +8,12 @@ const createElements = (numberOfElements) => {
   for(let i = 1; i < numberOfElements; ++i) {
     elements.push({
       id: i + 1,
-      firstName: faker.name.firstName,
-      lastName: faker.name.lastName,
-      phone: faker.phone.phoneNumber,
-      city: faker.address.city,
-      street: faker.address.streetAddress,
-      zipCode: faker.address.zipCode,
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      phone: faker.phone.phoneNumber(),
+      city: faker.address.city(),
+      street: faker.address.streetAddress(),
+      zipCode: faker.address.zipCode(),
     });
   }
 

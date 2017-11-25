@@ -33,8 +33,8 @@ const customerSchema = {
     Customer: {
     },
     Query: {
-      orders: () => customersService.findAll(),
-      order: (obj, { id }) => customersService.findByIdLoader().load(id),
+      customers: () => customersService.findAll(),
+      customer: (obj, { id }) => customersService.findByIdLoader().load(id),
     },
     Mutation: {
       createCustomer: (obj, { customer }) => customersService.create(customer),

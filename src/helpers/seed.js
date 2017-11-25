@@ -3,6 +3,7 @@ const db = require('../database');
 const logger = require('./logger');
 const usersSeed = require('../components/users/usersSeed');
 const customersSeed = require('../components/customers/customersSeed');
+const ordersSeed = require('../components/orders/ordersSeed');
 
 const seed = () => {
   // Independent seeds first
@@ -10,6 +11,7 @@ const seed = () => {
     .then(() => Promise.all([
       usersSeed(config.seed.users),
       customersSeed(config.seed.customers),
+      ordersSeed(config.seed.orders, config.seed.customers),
     ]))
     .then(() => {
       // More seeds that require IDs from the seeds above

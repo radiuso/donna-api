@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const config = require('./config');
 const UserModel = require('./components/users/userModel');
 const CustomerModel = require('./components/customers/customerModel');
-// const Order = require('./components/orders/order');
+const Order = require('./components/orders/orderModel');
 
 const { user, password, database, options } = config.db;
 
@@ -13,7 +13,7 @@ const db = {
 
 db.User = db.sequelize.import('user', UserModel);
 db.Customer = db.sequelize.import('customer', CustomerModel);
-// db.Order = db.sequelize.import('order', Order);
+db.Order = db.sequelize.import('order', Order);
 
 // association
 Object.keys(db).forEach(modelName => {

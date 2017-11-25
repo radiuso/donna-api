@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Order.associate = (models) => {
-    Order.hasOne(models.Customer, {
+    Order.belongsTo(models.Customer, {
       foreignKey: {
         allowNull: false,
       }
