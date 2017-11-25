@@ -19,8 +19,12 @@ class CustomerSchema extends BaseSchema {
       }
 
       input CustomerInput {
-        targetDate: Date
-        status: Int!
+        firstName: String!,
+        lastName: String!,
+        phone: String,
+        city: String,
+        street: String,
+        zipCode: String
       }
     `;
   }
@@ -34,7 +38,7 @@ class CustomerSchema extends BaseSchema {
 
   get mutation() {
     return `
-      createCustomer(order: CustomerInput!): CustomerPayload
+      createCustomer(customer: CustomerInput!): CustomerPayload
       updateCustomer(id: Int!, customer: CustomerInput!): CustomerPayload
     `;
   }
@@ -43,7 +47,7 @@ class CustomerSchema extends BaseSchema {
     return {
       Query: {
         customers: () => customersService.findAll(),
-        customer: (obj, { id }) => customersService.findByIdLoader().load(id),
+        customer: (obj, { id }) => customersService.findByIdLoader.load(id),
       },
       Mutation: {
         createCustomer: (obj, { customer }) => customersService.create(customer),

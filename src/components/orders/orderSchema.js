@@ -18,7 +18,7 @@ class OrderSchema extends BaseSchema {
 
       input OrderInput {
         targetDate: Date
-        status: Int!
+        status: Int
         customerId: Int!
       }
     `;

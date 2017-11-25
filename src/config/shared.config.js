@@ -13,5 +13,18 @@ module.exports = {
       operatorsAliases: false,
     }
   },
-  seed: {}
+  seed: {
+    users: {
+      truncate: false,
+      numberOfElements: 10,
+    },
+    customers: {
+      truncate: false,
+      numberOfElements: 30,
+    },
+    orders: {
+      truncate: false,
+      numberOfElements: 100,
+    },
+  },
 };
