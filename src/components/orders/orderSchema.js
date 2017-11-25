@@ -7,7 +7,7 @@ class OrderSchema extends BaseSchema {
     return `
       type Order {
         id: Int!
-        targetDate: Date
+        targetDate: DateTime
         status: Int!
         customer: Customer
       }
@@ -17,7 +17,7 @@ class OrderSchema extends BaseSchema {
       }
 
       input OrderInput {
-        targetDate: Date
+        targetDate: DateTime
         status: Int
         customerId: Int!
       }

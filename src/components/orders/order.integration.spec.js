@@ -47,18 +47,21 @@ describe('Order integration', () => {
   });
 
   it('Should create an Order for the first customer', () => {
+    const date = new Date();
+    const isoDate = date.toISOString();
     const query = `mutation {
       createOrder(order: {
-        targetDate: 1511614466
+        targetDate: "${isoDate}"
         customerId: 1
       }) {
-        order { customer { id } }
+        order { targetDate, customer { id } }
       }
     }`;
 
     const expected = {
       createOrder: {
         order: {
+          targetDate: isoDate,
           customer: {
             id: 1
           },

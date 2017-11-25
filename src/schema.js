@@ -1,13 +1,13 @@
 const { makeExecutableSchema } = require('graphql-tools');
 const objectAssignDeep = require('object-assign-deep');
+const { GraphQLDateTime } = require('graphql-iso-date');
 
-const dateResolver = require('./resolvers/dateResolver');
 const UserSchema = require('./components/users/userSchema');
 const CustomerSchema = require('./components/customers/customerSchema');
 const OrderSchema = require('./components/orders/orderSchema');
 
 const SchemaDefinition = `
-  scalar Date
+  scalar DateTime
 
   schema {
     query: Query
@@ -37,7 +37,7 @@ const RootResolvers = {
   Query: {
     version: () => '0.1',
   },
-  Date: dateResolver,
+  DateTime: GraphQLDateTime,
 };
 
 const resolvers = objectAssignDeep({},
