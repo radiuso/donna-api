@@ -7,6 +7,7 @@ const createElements = (numberOfElements) => {
   const elements = [{
     id: 1,
     email: 'admin@donna.com',
+    passwd: 'securepwd',
     firstName: 'admin',
     lastName: 'admin',
   }];
@@ -15,6 +16,7 @@ const createElements = (numberOfElements) => {
     elements.push({
       id: i + 1,
       email: faker.internet.email(),
+      passwd: 'securepwd',
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
     });

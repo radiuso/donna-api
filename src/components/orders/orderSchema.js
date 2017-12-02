@@ -1,6 +1,7 @@
 const BaseSchema = require('../base_component/BaseSchema');
 const ordersService = require('./ordersService');
 const customersService = require('../customers/customersService');
+const authService = require('../auth/authService');
 
 class OrderSchema extends BaseSchema {
   get definition() {
@@ -44,7 +45,8 @@ class OrderSchema extends BaseSchema {
         customer: (obj) => customersService.findByIdLoader.load(obj.customerId),
       },
       Query: {
-        orders: () => ordersService.findAll(),
+        orders: (obj, args, context) => authService.checkAuthentication(context)
+          .then(() => ordersService.findAll()),
         order: (obj, { id }) => ordersService.findByIdLoader.load(id),
       },
       Mutation: {

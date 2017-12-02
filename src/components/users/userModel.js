@@ -21,6 +21,15 @@ module.exports = function(sequelize, DataTypes) {
         }
       },
     },
+    passwd: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Password cannot be empty',
+        },
+      }
+    },
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -40,6 +49,12 @@ module.exports = function(sequelize, DataTypes) {
       },
     },
   });
+
+  // Methods
+  UserModel.prototype.verifyPassword = function(pwd) {
+    // TODO hash
+    return pwd === this.passwd;
+  };
 
   return UserModel;
 }

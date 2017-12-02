@@ -3,6 +3,9 @@ module.exports = {
   server: {
     port: 3000,
   },
+  secrets: {
+    token: 'donna-api-secret',
+  },
   db: {
     options: {
       host: '',
