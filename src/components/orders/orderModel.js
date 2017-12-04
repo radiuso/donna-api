@@ -22,6 +22,8 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
       }
     });
+
+    Order.belongsToMany(models.Product, { through: models.ProductsOrder });
   };
 
   return Order;

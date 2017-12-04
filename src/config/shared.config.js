@@ -33,5 +33,9 @@ module.exports = {
       truncate: false,
       numberOfElements: 200,
     },
+    productsOrder: {
+      truncate: false,
+      numberOfElements: 250,
+    },
   },
 };

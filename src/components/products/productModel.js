@@ -24,5 +24,9 @@ module.exports = function(sequelize, DataTypes) {
     },
   });
 
+  Product.associate = (models) => {
+    Product.belongsToMany(models.Order, { through: models.ProductsOrder });
+  };
+
   return Product;
 }
