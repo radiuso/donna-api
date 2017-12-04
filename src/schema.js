@@ -1,11 +1,26 @@
 const { makeExecutableSchema } = require('graphql-tools');
 const objectAssignDeep = require('object-assign-deep');
 const { GraphQLDateTime } = require('graphql-iso-date');
+const components = require('./components');
 
-const AuthSchema = require('./components/auth/authSchema');
-const UserSchema = require('./components/users/userSchema');
-const CustomerSchema = require('./components/customers/customerSchema');
-const OrderSchema = require('./components/orders/orderSchema');
+const RootResolvers = {
+  Query: {
+    version: () => '0.1',
+  },
+  DateTime: GraphQLDateTime,
+};
+
+let resolvers = objectAssignDeep({}, RootResolvers);
+let queries = '';
+let mutations = '';
+let definitions = '';
+
+components.forEach((component) => {
+  resolvers = objectAssignDeep(resolvers, component.resolvers);
+  queries += component.query;
+  mutations += component.mutation;
+  definitions += component.definition;
+});
 
 const SchemaDefinition = `
   scalar DateTime
@@ -17,40 +32,15 @@ const SchemaDefinition = `
 
   type Query {
     version: String!
-    ${AuthSchema.query}
-    ${UserSchema.query}
-    ${CustomerSchema.query}
-    ${OrderSchema.query}
+    ${queries}
   }
 
   type Mutation {
-    ${AuthSchema.mutation}
-    ${UserSchema.mutation}
-    ${CustomerSchema.mutation}
-    ${OrderSchema.mutation}
+    ${mutations}
   }
 
-  ${AuthSchema.definition}
-  ${UserSchema.definition}
-  ${CustomerSchema.definition}
-  ${OrderSchema.definition}
+  ${definitions}
 `;
-
-// TODO read the version from the config
-const RootResolvers = {
-  Query: {
-    version: () => '0.1',
-  },
-  DateTime: GraphQLDateTime,
-};
-
-const resolvers = objectAssignDeep({},
-  RootResolvers,
-  AuthSchema.resolvers,
-  UserSchema.resolvers,
-  CustomerSchema.resolvers,
-  OrderSchema.resolvers
-);
 
 module.exports = makeExecutableSchema({
   typeDefs: SchemaDefinition,
