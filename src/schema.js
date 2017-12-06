@@ -2,6 +2,7 @@ const { makeExecutableSchema } = require('graphql-tools');
 const objectAssignDeep = require('object-assign-deep');
 const { GraphQLDateTime } = require('graphql-iso-date');
 const components = require('./components');
+const graphAuthMiddleware = require('./middleware/graphAuthMiddleware');
 
 const RootResolvers = {
   Query: {
@@ -16,7 +17,14 @@ let mutations = '';
 let definitions = '';
 
 components.forEach((component) => {
-  resolvers = objectAssignDeep(resolvers, component.resolvers);
+  let componentResolvers = component.resolvers;
+
+  if (component.requireAuth) {
+    componentResolvers = graphAuthMiddleware.apply(componentResolvers);
+  }
+
+  resolvers = objectAssignDeep(resolvers, componentResolvers);
+
   queries += component.query;
   mutations += component.mutation;
   definitions += component.definition;

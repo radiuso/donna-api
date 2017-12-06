@@ -2,6 +2,10 @@ const BaseSchema = require('../base_component/BaseSchema');
 const authService = require('./authService');
 
 class AuthSchema extends BaseSchema {
+  get requireAuth() {
+    return false;
+  }
+
   get definition() {
     return `
       type AuthPayload {
