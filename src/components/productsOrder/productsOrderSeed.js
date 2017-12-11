@@ -35,7 +35,7 @@ const productsOrderSeed = ({ truncate, numberOfElements }, ordersConfig, product
       () => createElements(numberOfElements, ordersConfig.numberOfElements, productsConfig.numberOfElements)
     );
   }
-  console.log(numberOfElements, ordersConfig.numberOfElements, productsConfig.numberOfElements);
+
   return createElements(numberOfElements, ordersConfig.numberOfElements, productsConfig.numberOfElements);
 };
 
