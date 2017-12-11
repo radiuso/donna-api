@@ -13,8 +13,10 @@ const signToken = (id, user) => {
 };
 
 class AuthService {
-  authenticate(username, password, context) {
-    context.inProgress = true;
+  login(username, password, context) {
+    if (context) {
+      context.inProgress = true;
+    }
 
     return authDAL.findByUsername(username)
     .then((user) => {
@@ -29,12 +31,24 @@ class AuthService {
       const token = signToken(user.id, user);
 
       authEmitter.emit('login_success', token);
-      context.token = token;
+      if (context) {
+        context.token = token;
+      }
 
       return {
         token,
       };
     });
+  }
+
+  authenticate(token) {
+    if (token === undefined) {
+      throw new Error('not authenticated');
+    }
+
+    return {
+      token,
+    };
   }
 
   checkAuthentication(context) {
@@ -45,19 +59,24 @@ class AuthService {
           return reject('not authenticated');
         }
 
+        // TODO validation
         return resolve();
       };
 
-      if (context.inProgress) {
-        authEmitter.on('login_success', (token) => {
-          validateToken(token);
-        });
+      if (context) {
+        if (context.inProgress) {
+          authEmitter.on('login_success', (token) => {
+            validateToken(token);
+          });
 
-        authEmitter.on('login_error', () => {
-          return reject('not rights');
-        });
+          authEmitter.on('login_error', () => {
+            return reject('not rights');
+          });
+        } else {
+          validateToken(context.token);
+        }
       } else {
-        validateToken(context.token);
+        return reject('no context');
       }
     });
   }
