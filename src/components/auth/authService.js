@@ -1,7 +1,7 @@
 const { setTimeout } = require('timers');
 const jwt = require('jsonwebtoken');
-const authDAL = require('./authDAL');
 const { secrets } = require('../../config');
+const authDAL = require('./authDAL');
 const authEmitter = require('./authEmitter');
 
 const signToken = (id, user) => {
@@ -54,7 +54,6 @@ class AuthService {
     }
 
     return new Promise((resolve, reject) => {
-
       try {
         const decoded = decodeToken(token);
 
@@ -74,7 +73,8 @@ class AuthService {
         setTimeout(() => {
           authEmitter.emit('login_error');
         }, 50);
-        reject();
+
+        reject(err.message);
       }
     });
   }
