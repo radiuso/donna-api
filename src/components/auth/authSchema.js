@@ -2,33 +2,41 @@ const BaseSchema = require('../base_component/BaseSchema');
 const authService = require('./authService');
 
 class AuthSchema extends BaseSchema {
+  get requireAuth() {
+    return false;
+  }
+
   get definition() {
     return `
       type AuthPayload {
-        token: String
+        token: String!
       }
     `;
   }
 
   get query() {
     return `
-      authenticate(username: String!, password: String!): AuthPayload
+      login(username: String!, password: String!): AuthPayload
+      authenticate(token: String!): AuthPayload
     `;
   }
 
   get mutation() {
     return `
-      authenticate(username: String!, password: String!): AuthPayload
+      login(username: String!, password: String!): AuthPayload
+      authenticate(token: String!): AuthPayload
     `;
   }
 
   get resolvers() {
     return {
       Query: {
-        authenticate: (obj, { username, password }, context) => authService.authenticate(username, password, context),
+        login: (obj, { username, password }, context) => authService.login(username, password, context),
+        authenticate: (obj, { token }, context) => authService.authenticate(token, context),
       },
       Mutation: {
-        authenticate: (obj, { username, password }, context) => authService.authenticate(username, password, context),
+        login: (obj, { username, password }, context) => authService.login(username, password, context),
+        authenticate: (obj, { token }, context) => authService.authenticate(token, context),
       },
     };
   }

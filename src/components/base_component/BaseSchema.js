@@ -1,5 +1,9 @@
 
 class BaseSchema {
+  get requireAuth() {
+    return true;
+  }
+
   get definition() {
     return ``;
   }

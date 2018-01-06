@@ -19,9 +19,16 @@ function start(done) {
     }
 
     return graphql(rootSchema, graphqlQuery)
+      .then(response => {
+        if (response.errors) {
+          logger.error(response.errors);
+        }
+
+        return response;
+      })
       .then(response => response.data)
-      .then((data) => res.json(data))
-      .catch((err) => logger.error(err));
+      .then(data => res.json(data))
+      .catch(err => logger.error(err));
   });
 
   return app.listen(port, () => {
@@ -45,8 +52,16 @@ function graphqlQuery(app, query) {
       graphqlQuery : query
     },
     resolveWithFullResponse: true,
-    json: true
+    json: true,
   })
+  .then(response => {
+    if (response.errors) {
+      logger.error(response.errors);
+    }
+
+    return response;
+  })
+  .catch(err => logger.error(err));
 }
 
 module.exports = {

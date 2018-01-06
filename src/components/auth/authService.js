@@ -1,6 +1,7 @@
+const { setTimeout } = require('timers');
 const jwt = require('jsonwebtoken');
-const authDAL = require('./authDAL');
 const { secrets } = require('../../config');
+const authDAL = require('./authDAL');
 const authEmitter = require('./authEmitter');
 
 const signToken = (id, user) => {
@@ -12,9 +13,15 @@ const signToken = (id, user) => {
   });
 };
 
+const decodeToken = (token) => {
+  return jwt.verify(token, secrets.token);
+};
+
 class AuthService {
-  authenticate(username, password, context) {
-    context.inProgress = true;
+  login(username, password, context) {
+    if (context) {
+      context.inProgress = true;
+    }
 
     return authDAL.findByUsername(username)
     .then((user) => {
@@ -27,9 +34,13 @@ class AuthService {
     })
     .then((user) => {
       const token = signToken(user.id, user);
+      const decoded = decodeToken(token);
 
-      authEmitter.emit('login_success', token);
-      context.token = token;
+      if (context) {
+        context.token = token;
+      }
+
+      authEmitter.emit('login_success', decoded);
 
       return {
         token,
@@ -37,27 +48,53 @@ class AuthService {
     });
   }
 
-  checkAuthentication(context) {
-    return new Promise((resolve, reject) => {
+  authenticate(token, context) {
+    if (context) {
+      context.inProgress = true;
+    }
 
-      const validateToken = (token) => {
-        if (token === undefined) {
-          return reject('not authenticated');
+    return new Promise((resolve, reject) => {
+      try {
+        const decoded = decodeToken(token);
+
+        if (context) {
+          context.token = token;
         }
 
-        return resolve();
-      };
+        setTimeout(() => {
+          authEmitter.emit('login_success', decoded);
+        }, 50);
 
-      if (context.inProgress) {
-        authEmitter.on('login_success', (token) => {
-          validateToken(token);
+        resolve({
+          token,
+          decoded,
         });
+      } catch (err) {
+        setTimeout(() => {
+          authEmitter.emit('login_error');
+        }, 50);
 
-        authEmitter.on('login_error', () => {
-          return reject('not rights');
-        });
+        reject(err.message);
+      }
+    });
+  }
+
+  checkAuthentication(context) {
+    return new Promise((resolve, reject) => {
+      if (context) {
+        if (context.inProgress) {
+          authEmitter.on('login_success', (user) => {
+            resolve(user);
+          });
+
+          authEmitter.on('login_error', () => {
+            return reject('no rights');
+          });
+        } else {
+          resolve(decodeToken(context.token));
+        }
       } else {
-        validateToken(context.token);
+        return reject('no context');
       }
     });
   }

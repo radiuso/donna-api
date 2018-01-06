@@ -49,8 +49,7 @@ class OrderSchema extends BaseSchema {
         products: (obj) => productsOrderService.findAllByOrderIdLoader.load(obj.id),
       },
       Query: {
-        orders: (obj, args, context) => authService.checkAuthentication(context)
-          .then(() => ordersService.findAll()),
+        orders: () => ordersService.findAll(),
         order: (obj, { id }) => ordersService.findByIdLoader.load(id),
       },
       Mutation: {

@@ -1,6 +1,5 @@
 const BaseSchema = require('../base_component/BaseSchema');
 const productsService = require('./productsService');
-const authService = require('../auth/authService');
 
 class ProductSchema extends BaseSchema {
   get definition() {
@@ -43,8 +42,7 @@ class ProductSchema extends BaseSchema {
   get resolvers() {
     return {
       Query: {
-        products: (obj, args, context) => authService.checkAuthentication(context)
-          .then(() => productsService.findAll()),
+        products: () => productsService.findAll(),
         product: (obj, { id }) => productsService.findByIdLoader.load(id),
       },
       Mutation: {
