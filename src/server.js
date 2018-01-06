@@ -16,8 +16,8 @@ app.use(errorHandlerMiddleware);
 // sync db and start the server
 db.sequelize.sync()
   .then(() => {
-    return app.listen(3000, () => {
-      logger.info('donna api is listening on port 3000!')
+    return app.listen(8080, () => {
+      logger.info('donna api is listening on port 8080!')
     });
   })
   .catch(function(err) {
