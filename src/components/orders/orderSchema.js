@@ -2,6 +2,7 @@ const BaseSchema = require('../base_component/BaseSchema');
 const ordersService = require('./ordersService');
 const customersService = require('../customers/customersService');
 const authService = require('../auth/authService');
+const productsOrderService = require('../productsOrder/productsOrderService');
 
 class OrderSchema extends BaseSchema {
   get definition() {
@@ -11,6 +12,7 @@ class OrderSchema extends BaseSchema {
         targetDate: DateTime
         status: Int!
         customer: Customer
+        products: ProductsOrder
       }
 
       type OrderPayload {
@@ -21,6 +23,7 @@ class OrderSchema extends BaseSchema {
         targetDate: DateTime
         status: Int
         customerId: Int!
+        products: [ProductsOrderInput!]!
       }
     `;
   }
@@ -43,6 +46,7 @@ class OrderSchema extends BaseSchema {
     return {
       Order: {
         customer: (obj) => customersService.findByIdLoader.load(obj.customerId),
+        products: (obj) => productsOrderService.findAllByOrderIdLoader.load(obj.id),
       },
       Query: {
         orders: (obj, args, context) => authService.checkAuthentication(context)
