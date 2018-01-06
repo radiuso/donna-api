@@ -1,7 +1,6 @@
 const BaseSchema = require('../base_component/BaseSchema');
 const ordersService = require('./ordersService');
 const customersService = require('../customers/customersService');
-const authService = require('../auth/authService');
 const productsOrderService = require('../productsOrder/productsOrderService');
 
 class OrderSchema extends BaseSchema {
