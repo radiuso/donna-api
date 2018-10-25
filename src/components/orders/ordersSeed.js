@@ -1,6 +1,7 @@
 const faker = require('faker');
 const logger = require ('../../helpers/logger');
 const { Order } = require('../../database');
+const OrderDAL = require('./ordersDAL');
 
 const createElements = (numberOfElements, numberOfCustomers) => {
   const elements = [];
@@ -20,11 +21,9 @@ const createElements = (numberOfElements, numberOfCustomers) => {
   });
 };
 
-const ordersSeed = ({ truncate, numberOfElements }, customersConfig) => {
+const ordersSeed = async ({ truncate, numberOfElements }, customersConfig) => {
   if (truncate) {
-    return Order.truncate().then(
-      () => createElements(numberOfElements, customersConfig.numberOfElements)
-    );
+    await OrderDAL.truncate();
   }
 
   return createElements(numberOfElements, customersConfig.numberOfElements);

@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 
 class BaseDAL {
   constructor(Entity) {
@@ -30,6 +31,14 @@ class BaseDAL {
         id,
       },
     });
+  }
+
+  async truncate() {
+    return this.Entity.destroy({
+      where: {
+        id: { [Op.gt]: 0 },
+      },
+    })
   }
 }
 

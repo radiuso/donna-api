@@ -1,3 +1,6 @@
 const seed = require('./helpers/seed');
 
-seed();
+(async () => {
+    await seed();
+    process.exit();
+})()

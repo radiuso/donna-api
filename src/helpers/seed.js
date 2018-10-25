@@ -7,7 +7,7 @@ const ordersSeed = require('../components/orders/ordersSeed');
 const productsSeed = require('../components/products/productsSeed');
 const productsOrderSeed = require('../components/productsOrder/productsOrderSeed');
 
-const seed = () => {
+const seed = async () => {
   // Independent seeds first
   return db.sequelize.sync()
     .then(() => Promise.all([
@@ -18,12 +18,13 @@ const seed = () => {
     ]))
     .then(() => {
       // More seeds that require IDs from the seeds above
-      productsOrderSeed(config.seed.productsOrder, config.seed.orders, config.seed.customers);
+      return productsOrderSeed(config.seed.productsOrder, config.seed.orders, config.seed.customers);
     })
     .then(() => {
       logger.info(`The database for the "${config.env}" environment is now seeded`);
     })
     .catch(err => {
+      console.error(err);
       logger.error(err);
     });
 };

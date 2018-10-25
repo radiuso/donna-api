@@ -6,11 +6,11 @@ const Order = require('./components/orders/orderModel');
 const Product = require('./components/products/productModel');
 const ProductsOrder = require('./components/productsOrder/productsOrderModel');
 
-const { user, password, database, options } = config.db;
+const { username, password, database, options } = config.db;
 
 const db = {
   Sequelize,
-  sequelize: new Sequelize(database, user, password, options),
+  sequelize: new Sequelize(database, username, password, options),
 };
 
 db.User = db.sequelize.import('user', UserModel);

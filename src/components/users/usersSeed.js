@@ -1,6 +1,7 @@
 const faker = require('faker');
 const logger = require ('../../helpers/logger');
 const { User } = require('../../database');
+const UsersDAL = require('./usersDAL');
 
 const createElements = (numberOfElements) => {
   // always create admin user
@@ -28,9 +29,10 @@ const createElements = (numberOfElements) => {
   });
 };
 
-const usersSeed = ({ truncate, numberOfElements }) => {
+const usersSeed = async ({ truncate, numberOfElements }) => {
   if (truncate) {
-    return User.truncate().then(() => createElements(numberOfElements));
+    await UsersDAL.truncate();
+    return createElements(numberOfElements);
   }
 
   return createElements(numberOfElements);

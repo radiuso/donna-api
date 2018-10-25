@@ -1,6 +1,7 @@
 const faker = require('faker');
 const logger = require ('../../helpers/logger');
 const { ProductsOrder } = require('../../database');
+const ProductsOrderDAL = require('./productsOrderDAL');
 
 const createElements = (numberOfElements, numberOfOrders, numberOfProducts) => {
   const elements = [];
@@ -29,11 +30,9 @@ const createElements = (numberOfElements, numberOfOrders, numberOfProducts) => {
   });
 };
 
-const productsOrderSeed = ({ truncate, numberOfElements }, ordersConfig, productsConfig) => {
+const productsOrderSeed = async ({ truncate, numberOfElements }, ordersConfig, productsConfig) => {
   if (truncate) {
-    return ProductsOrder.truncate().then(
-      () => createElements(numberOfElements, ordersConfig.numberOfElements, productsConfig.numberOfElements)
-    );
+    await ProductsOrderDAL.truncate();
   }
 
   return createElements(numberOfElements, ordersConfig.numberOfElements, productsConfig.numberOfElements);
