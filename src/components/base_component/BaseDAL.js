@@ -10,7 +10,7 @@ class BaseDAL {
   }
 
   findById(id) {
-    return this.Entity.findById(id);
+    return this.Entity.findByPk(id);
   }
 
   findAllByIds(ids) {
@@ -21,12 +21,24 @@ class BaseDAL {
     });
   }
 
+  findOne(where) {
+    return this.Entity.findOne(where);
+  }
+
   create(entity) {
     return this.Entity.create(entity);
   }
 
   update(id, entity) {
     return this.Entity.update(entity, {
+      where: {
+        id,
+      },
+    });
+  }
+
+  delete(id) {
+    return this.Entity.destroy({
       where: {
         id,
       },

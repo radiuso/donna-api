@@ -13,7 +13,8 @@
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint src",
     "seed": "cross-env NODE_ENV=development node ./src/seeder.js",
-    "test-integration": "cross-env NODE_ENV=test mocha src/components/**/*.integration.spec.js"
+    "test-integration": "cross-env NODE_ENV=test mocha src/components/**/*.integration.spec.js",
+    "test": "cross-env NODE_ENV=test mocha src/components/**/*.unit.spec.js"
   },
   "dependencies": {
     "cors": "^2.8.4",
