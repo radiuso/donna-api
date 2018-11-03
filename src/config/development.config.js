@@ -1,14 +1,11 @@
 module.exports = {
   env: 'development',
   db: {
-    database: 'donna',
-    username: 'donna',
-    password: 'TbvGmFkX1OhqGudQ',
     options: {
       host: 'localhost',
-      dialect: 'mysql',
-      port: 3306,
-      logging: null,
+      dialect: 'sqlite',
+      storage: '/data/donna_dev.db',
+      logging: false,
     }
   },
   seed: {
