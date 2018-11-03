@@ -12,6 +12,7 @@ module.exports = (app) => {
     graphiql: false,
     context: {
       request,
+      token: request.headers.authorization || '',
     },
     formatError: error => ({
       message: error.message,

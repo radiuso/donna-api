@@ -1,5 +1,6 @@
 const BaseSchema = require('../base_component/BaseSchema');
 const customersService = require('./customersService');
+const ordersService = require('../orders/ordersService');
 
 class CustomerSchema extends BaseSchema {
   get definition() {
@@ -11,7 +12,8 @@ class CustomerSchema extends BaseSchema {
         phone: String,
         city: String,
         street: String,
-        zipCode: String
+        zipCode: String,
+        orders: [Order]
       }
 
       type CustomerPayload {
@@ -45,6 +47,9 @@ class CustomerSchema extends BaseSchema {
 
   get resolvers() {
     return {
+      Customer: {
+        orders: (obj) => ordersService.findAllByCustomerIdLoader.load(obj.id),
+      },
       Query: {
         customers: () => customersService.findAll(),
         customer: (obj, { id }) => customersService.findByIdLoader.load(id),
@@ -52,7 +57,7 @@ class CustomerSchema extends BaseSchema {
       Mutation: {
         createCustomer: (obj, { customer }) => customersService.create(customer),
         updateCustomer: (obj, { id, customer }) => customersService.update(id, customer),
-      }
+      },
     };
   }
 }
