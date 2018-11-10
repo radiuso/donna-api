@@ -4,16 +4,14 @@ module.exports = {
     port: 3000,
   },
   secrets: {
-    token: 'donna-api-secret',
+    token: process.env.APP_TOKEN,
   },
   db: {
     options: {
-      host: '',
-      dialect: '',
-      storage: '',
-      logging: false,
-      freezeTableName: true,
-      operatorsAliases: false,
+      host: process.env.DB_HOST,
+      dialect: process.env.DB_DIALECT,
+      storage: process.env.DB_STORAGE,
+      logging: process.env.DB_LOGGING,
     }
   },
   seed: {

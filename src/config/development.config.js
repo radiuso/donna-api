@@ -1,13 +1,5 @@
 module.exports = {
   env: 'development',
-  db: {
-    options: {
-      host: 'localhost',
-      dialect: 'sqlite',
-      storage: '/data/donna_dev.db',
-      logging: false,
-    }
-  },
   seed: {
     users: {
       truncate: true,
