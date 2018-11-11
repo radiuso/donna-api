@@ -11,7 +11,9 @@ module.exports = {
       host: process.env.DB_HOST,
       dialect: process.env.DB_DIALECT,
       storage: process.env.DB_STORAGE,
-      logging: process.env.DB_LOGGING,
+      logging: false,
+      freezeTableName: true,
+      operatorsAliases: false,
     }
   },
   seed: {
