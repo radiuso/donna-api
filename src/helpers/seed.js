@@ -11,7 +11,7 @@ const seed = async () => {
   try {
     // Independent seeds first
     await db.sequelize.sync();
-    const [users, customers, orders, products] = await Promise.all([
+    const [, customers, orders] = await Promise.all([
       usersSeed(config.seed.users),
       customersSeed(config.seed.customers),
       ordersSeed(config.seed.orders, config.seed.customers),

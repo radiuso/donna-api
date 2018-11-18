@@ -11,12 +11,32 @@ class ProductsOrderService extends BaseService {
       (orderIds) =>  {
         const res = productsOrderDAL.findAllByOrderId(orderIds);
         return res.then(data => {
-          const group =  groupBy(data, (po) => po.orderId);
+          const group = groupBy(data, (po) => po.orderId);
 
           return group;
         });
       }
     );
+
+    this.sumOrdersProductsPricesLoader = new DataLoader(async (orderIds) => {
+      const data = await productsOrderDAL.sumOrdersProductsPrices(orderIds);
+      const group = groupBy(data, po => po.orderId);
+      const res = [];
+
+      orderIds.forEach(orderId => {
+        const orderGroup = group[orderId];
+        let total = 0;
+
+        if (orderGroup) {
+          const d = orderGroup[0].toJSON();
+          total = d.totalPrice;
+        }
+
+        res.push(total);
+      })
+
+      return res;
+    });
   }
 }
 

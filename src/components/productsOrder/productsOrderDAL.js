@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Op, fn, literal } = require('sequelize');
 const BaseDAL = require('../base_component/BaseDAL');
 const { ProductsOrder } = require('../../database');
 
@@ -12,6 +12,19 @@ class ProductsOrderDAL extends BaseDAL {
       where: {
         orderId: orderIds,
       },
+    });
+  }
+
+  async sumOrdersProductsPrices(orderIds) {
+    return this.Entity.findAll({
+      attributes: [
+        'orderId',
+        [fn('SUM', literal('(unitPrice * quantity)')), 'totalPrice'],
+      ],
+      where: {
+        orderId: orderIds,
+      },
+      group: ['orderId'],
     });
   }
 

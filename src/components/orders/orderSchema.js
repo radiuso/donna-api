@@ -12,6 +12,7 @@ class OrderSchema extends BaseSchema {
         status: Int!
         customer: Customer
         productsOrder: ProductsOrder
+        totalPrice: Float
       }
 
       type OrderPayload {
@@ -47,6 +48,7 @@ class OrderSchema extends BaseSchema {
       Order: {
         customer: (obj) => customersService.findByIdLoader.load(obj.customerId),
         productsOrder: (obj) => productsOrderService.findAllByOrderIdLoader.load(obj.id),
+        totalPrice: (obj) => productsOrderService.sumOrdersProductsPricesLoader.load(obj.id),
       },
       Query: {
         orders: () => ordersService.findAll(),
