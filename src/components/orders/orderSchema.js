@@ -11,7 +11,7 @@ class OrderSchema extends BaseSchema {
         targetDate: DateTime
         status: Int!
         customer: Customer
-        products: ProductsOrder
+        productsOrder: ProductsOrder
       }
 
       type OrderPayload {
@@ -30,6 +30,7 @@ class OrderSchema extends BaseSchema {
   get query() {
     return `
       orders: [Order]!
+      ordersFor(date: Date): [Order]!
       order(id: Int!): Order
     `;
   }
@@ -45,10 +46,11 @@ class OrderSchema extends BaseSchema {
     return {
       Order: {
         customer: (obj) => customersService.findByIdLoader.load(obj.customerId),
-        products: (obj) => productsOrderService.findAllByOrderIdLoader.load(obj.id),
+        productsOrder: (obj) => productsOrderService.findAllByOrderIdLoader.load(obj.id),
       },
       Query: {
         orders: () => ordersService.findAll(),
+        ordersFor: (obj, { date }) => ordersService.findByDateLoader().load(date),
         order: (obj, { id }) => ordersService.findByIdLoader.load(id),
       },
       Mutation: {

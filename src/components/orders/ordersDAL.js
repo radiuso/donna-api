@@ -13,6 +13,15 @@ class OrdersDAL extends BaseDAL {
       },
     });
   }
+
+  findAllByDates(dates) {
+    return this.Entity.findAll({
+      where: {
+        concernDate: dates,
+      },
+      order: [['targetDate', 'ASC']],
+    })
+  }
 }
 
 module.exports = new OrdersDAL();

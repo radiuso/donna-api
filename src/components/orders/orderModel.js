@@ -1,3 +1,5 @@
+const format = require('date-fns/format');
+
 /**
  * Order model
  * @param {*} sequelize
@@ -5,6 +7,11 @@
  */
 module.exports = function(sequelize, DataTypes) {
   const Order = sequelize.define('order', {
+    // date of the concerned day ex: 2018-11-16T00:00:00.000Z
+    concernDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
     targetDate: {
       type: DataTypes.DATE,
       allowNull: false
@@ -14,6 +21,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 1,
     },
+  }, {
+    hooks: {
+      beforeValidate: (order) => {
+        // set the concernDate
+        if (order.targetDate) {
+          order.concernDate = format(order.targetDate, 'YYYY-MM-DD')
+        }
+      },
+    }
   });
 
   Order.associate = (models) => {

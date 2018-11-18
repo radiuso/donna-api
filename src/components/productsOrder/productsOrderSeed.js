@@ -3,39 +3,41 @@ const logger = require ('../../helpers/logger');
 const { ProductsOrder } = require('../../database');
 const ProductsOrderDAL = require('./productsOrderDAL');
 
-const createElements = (numberOfElements, numberOfOrders, numberOfProducts) => {
+const createElements = async (numberOfElements, orders, products) => {
   const elements = [];
   const assoc = [];
 
   for(let i = 0; i < numberOfElements; ++i) {
-    const orderId = faker.random.number({ min: 1, max: numberOfOrders - 1 });
-    const productId = faker.random.number({ min: 1, max: numberOfProducts - 1 });
-    const key = `${orderId}_${productId}`;
+    const myOrder = faker.random.arrayElement(orders);
+    const myProduct = faker.random.arrayElement(products);
+
+    const key = `${myOrder.id}_${myProduct.id}`;
 
     if (assoc[key] === undefined) {
       assoc[key] = true;
 
       elements.push({
         quantity: faker.random.number({ min: 1, max: 20 }),
-        orderId: orderId,
-        productId: productId,
-        price: faker.commerce.price(),
+        orderId: myOrder.id,
+        productId: myProduct.id,
+        unitPrice: myProduct.unitPrice,
+        unit: myProduct.unit,
       });
     }
   }
 
-  return ProductsOrder.bulkCreate(elements)
-  .then(() => {
-    logger.info(`${numberOfElements} Products order inserted`);
-  });
+  await ProductsOrder.bulkCreate(elements);
+  logger.info(`${numberOfElements} Products order inserted`);
+
+  return elements;
 };
 
-const productsOrderSeed = async ({ truncate, numberOfElements }, ordersConfig, productsConfig) => {
+const productsOrderSeed = async ({ truncate, numberOfElements }, orders, products) => {
   if (truncate) {
     await ProductsOrderDAL.truncate();
   }
 
-  return createElements(numberOfElements, ordersConfig.numberOfElements, productsConfig.numberOfElements);
+  return createElements(numberOfElements, orders, products);
 };
 
 module.exports = productsOrderSeed;

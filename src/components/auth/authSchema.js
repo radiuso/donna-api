@@ -9,7 +9,7 @@ class AuthSchema extends BaseSchema {
   get definition() {
     return `
       type AuthPayload {
-        token: String!
+        token: String
       }
     `;
   }

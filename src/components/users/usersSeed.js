@@ -3,7 +3,7 @@ const logger = require ('../../helpers/logger');
 const { User } = require('../../database');
 const UsersDAL = require('./usersDAL');
 
-const createElements = (numberOfElements) => {
+const createElements = async (numberOfElements) => {
   // always create admin user
   const elements = [{
     id: 1,
@@ -23,10 +23,10 @@ const createElements = (numberOfElements) => {
     });
   }
 
-  return User.bulkCreate(elements)
-  .then(() => {
-    logger.info(`${numberOfElements} Users inserted`);
-  });
+  await User.bulkCreate(elements)
+  logger.info(`${numberOfElements} Users inserted`);
+
+  return elements;
 };
 
 const usersSeed = async ({ truncate, numberOfElements }) => {

@@ -1,6 +1,6 @@
 const { makeExecutableSchema } = require('graphql-tools');
 const objectAssignDeep = require('object-assign-deep');
-const { GraphQLDateTime } = require('graphql-iso-date');
+const { GraphQLDateTime, GraphQLDate } = require('graphql-iso-date');
 const components = require('./components');
 const graphAuthMiddleware = require('./middleware/graphAuthMiddleware');
 
@@ -9,6 +9,7 @@ const RootResolvers = {
     version: () => '0.1',
   },
   DateTime: GraphQLDateTime,
+  Date: GraphQLDate,
 };
 
 let resolvers = objectAssignDeep({}, RootResolvers);
@@ -32,6 +33,7 @@ components.forEach((component) => {
 
 const SchemaDefinition = `
   scalar DateTime
+  scalar Date
 
   schema {
     query: Query

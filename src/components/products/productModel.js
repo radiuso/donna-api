@@ -17,10 +17,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    price: {
+    unitPrice: {
       type: DataTypes.FLOAT,
       allowNull: false,
       defaultValue: 1,
+    },
+    unit: {
+      type:DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'Unité'
     },
   });
 

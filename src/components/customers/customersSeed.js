@@ -3,7 +3,7 @@ const logger = require ('../../helpers/logger');
 const { Customer } = require('../../database');
 const CustomerDAL = require('./customersDAL');
 
-const createElements = (numberOfElements) => {
+const createElements = async (numberOfElements) => {
   const elements = [];
 
   for(let i = 0; i < numberOfElements; ++i) {
@@ -18,10 +18,10 @@ const createElements = (numberOfElements) => {
     });
   }
 
-  return Customer.bulkCreate(elements)
-  .then(() => {
-    logger.info(`${numberOfElements} Customers inserted`);
-  });
+  await Customer.bulkCreate(elements);
+  logger.info(`${numberOfElements} Customers inserted`);
+
+  return elements;
 };
 
 const ordersSeed = async ({ truncate, numberOfElements }) => {

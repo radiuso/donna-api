@@ -1,24 +1,27 @@
 const faker = require('faker');
+const format = require('date-fns/format');
 const logger = require ('../../helpers/logger');
 const { Order } = require('../../database');
 const OrderDAL = require('./ordersDAL');
 
-const createElements = (numberOfElements, numberOfCustomers) => {
+const createElements = async (numberOfElements, numberOfCustomers) => {
   const elements = [];
 
   for(let i = 0; i < numberOfElements; ++i) {
+    const date = faker.date.recent()
     elements.push({
       id: i + 1,
-      targetDate: faker.date.recent(),
+      concernDate: format(date, 'YYYY-MM-DD'),
+      targetDate: date,
       status: faker.random.number({ min: 1, max: 3 }),
       customerId: faker.random.number({ min: 1, max: numberOfCustomers }),
     });
   }
 
-  return Order.bulkCreate(elements)
-  .then(() => {
-    logger.info(`${numberOfElements} Orders inserted`);
-  });
+  await Order.bulkCreate(elements)
+  logger.info(`${numberOfElements} Orders inserted`);
+
+  return elements;
 };
 
 const ordersSeed = async ({ truncate, numberOfElements }, customersConfig) => {

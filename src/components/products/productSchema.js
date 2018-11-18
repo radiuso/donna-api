@@ -9,7 +9,8 @@ class ProductSchema extends BaseSchema {
         label: String!
         description: String
         category: Int!
-        price: Float
+        unitPrice: Float!
+        unit: String!
       }
 
       type ProductPayload {
@@ -21,6 +22,8 @@ class ProductSchema extends BaseSchema {
         description: String
         category: String
         price: String
+        unitPrice: Float
+        unit: String
       }
     `;
   }

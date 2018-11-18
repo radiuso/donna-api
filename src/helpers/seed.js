@@ -8,25 +8,23 @@ const productsSeed = require('../components/products/productsSeed');
 const productsOrderSeed = require('../components/productsOrder/productsOrderSeed');
 
 const seed = async () => {
-  // Independent seeds first
-  return db.sequelize.sync()
-    .then(() => Promise.all([
+  try {
+    // Independent seeds first
+    await db.sequelize.sync();
+    const [users, customers, orders, products] = await Promise.all([
       usersSeed(config.seed.users),
       customersSeed(config.seed.customers),
       ordersSeed(config.seed.orders, config.seed.customers),
       productsSeed(config.seed.products),
-    ]))
-    .then(() => {
-      // More seeds that require IDs from the seeds above
-      return productsOrderSeed(config.seed.productsOrder, config.seed.orders, config.seed.customers);
-    })
-    .then(() => {
-      logger.info(`The database for the "${config.env}" environment is now seeded`);
-    })
-    .catch(err => {
-      console.error(err);
+    ]);
+
+    // More seeds that require IDs from the seeds above
+    await productsOrderSeed(config.seed.productsOrder, orders, customers);
+
+    logger.info(`The database for the "${config.env}" environment is now seeded`);
+  } catch(err) {
       logger.error(err);
-    });
+  }
 };
 
 module.exports = seed;

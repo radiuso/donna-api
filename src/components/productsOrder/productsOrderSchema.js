@@ -7,6 +7,7 @@ class ProductsOrderSchema extends BaseSchema {
         orderId: Int!
         productId: Int!
         quantity: Int!
+        unitPrice: Float!
       }
 
       input ProductsOrderInput {
