@@ -25,8 +25,8 @@ class BaseDAL {
     return this.Entity.findOne(where);
   }
 
-  create(entity) {
-    return this.Entity.create(entity);
+  create(entity, include = {}) {
+    return this.Entity.create(entity, include);
   }
 
   update(id, entity) {

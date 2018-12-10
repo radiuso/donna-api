@@ -43,6 +43,8 @@ class OrdersService extends BaseService {
       entity.status = 1;
     }
 
+    console.log("ok");
+
     return super.create(entity);
   }
 }
