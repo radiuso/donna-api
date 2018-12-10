@@ -10,12 +10,10 @@ class ProductsOrderService extends BaseService {
     this.findAllByOrderIdLoader = new DataLoader(async (orderIds) => {
         const data = await productsOrderDAL.findAllByOrderId(orderIds);
         const group = groupBy(data, (po) => po.orderId);
-
-        console.log(data);
         const res = [];
 
         orderIds.forEach(orderId => {
-          res.push(group[orderId]);
+          res.push(group[orderId] || {});
         })
 
         return res;

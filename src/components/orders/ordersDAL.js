@@ -1,5 +1,5 @@
 const BaseDAL = require('../base_component/BaseDAL');
-const { Order } = require('../../database');
+const { Order, ProductsOrder } = require('../../database');
 
 class OrdersDAL extends BaseDAL {
   constructor() {
@@ -21,6 +21,18 @@ class OrdersDAL extends BaseDAL {
       },
       order: [['targetDate', 'ASC']],
     })
+  }
+
+  async create(entity) {
+    const order = await this.Entity.create(entity);
+
+    // create products
+    const productsOrder = entity.productsOrder;
+    productsOrder.forEach(po => po.orderId = order.id);
+
+    await ProductsOrder.bulkCreate(productsOrder);
+
+    return order;
   }
 }
 

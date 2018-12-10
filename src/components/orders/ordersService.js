@@ -25,7 +25,7 @@ class OrdersService extends BaseService {
   }
 
   findByDateLoader() {
-    return new DataLoader( async (dates) => {
+    return new DataLoader(async (dates) => {
       const ordersForDays = await ordersDAL.findAllByDates(dates)
       const orderGroups = groupBy(ordersForDays, entity => format(entity.targetDate, 'YYYYMMDD'))
       const orders = []
@@ -42,8 +42,6 @@ class OrdersService extends BaseService {
     if (entity.status === undefined) {
       entity.status = 1;
     }
-
-    console.log("ok");
 
     return super.create(entity);
   }

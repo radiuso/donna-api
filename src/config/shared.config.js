@@ -1,7 +1,7 @@
 module.exports = {
   env: 'production',
   server: {
-    port: 3000,
+    port: 8080,
   },
   secrets: {
     token: process.env.APP_TOKEN,

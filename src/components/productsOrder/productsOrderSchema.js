@@ -8,11 +8,14 @@ class ProductsOrderSchema extends BaseSchema {
         productId: Int!
         quantity: Int!
         unitPrice: Float!
+        unit: String
       }
 
       input ProductsOrderInput {
         productId: Int!
         quantity: Int!
+        unitPrice: Float!
+        unit: String
       }
     `;
   }

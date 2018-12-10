@@ -11,7 +11,7 @@ class OrderSchema extends BaseSchema {
         targetDate: DateTime
         status: Int!
         customer: Customer
-        productsOrder: ProductsOrder
+        productsOrder: [ProductsOrder]
         totalPrice: Float
       }
 
@@ -20,10 +20,10 @@ class OrderSchema extends BaseSchema {
       }
 
       input OrderInput {
-        targetDate: DateTime
+        targetDate: DateTime!
         status: Int
         customerId: Int!
-        products: [ProductsOrderInput!]!
+        productsOrder: [ProductsOrderInput]!
       }
     `;
   }
