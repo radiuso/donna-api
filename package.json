@@ -12,7 +12,8 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint src",
-    "seed": "cross-env NODE_ENV=development node ./src/seeder.js",
+    "seed": "cross-env NODE_ENV=test node ./src/seeder.js",
+    "test-current": "cross-env NODE_ENV=test mocha src/components/orders/order.integration.spec.js",
     "test-integration": "cross-env NODE_ENV=test mocha src/components/**/*.integration.spec.js",
     "test": "cross-env NODE_ENV=test mocha src/components/**/*.unit.spec.js"
   },
@@ -30,7 +31,6 @@
     "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.4",
     "mysql2": "^1.6.1",
-    "nodemon": "^1.12.1",
     "object-assign-deep": "^0.3.1",
     "sequelize": "^4.22.7",
     "sqlite3": "^4.0.2",
@@ -44,6 +44,7 @@
     "eslint-plugin-node": "^5.2.1",
     "expect": "^21.2.1",
     "mocha": "^4.0.1",
+    "nodemon": "^1.18.7",
     "request-promise": "^4.2.2"
   }
 }

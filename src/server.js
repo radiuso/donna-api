@@ -3,6 +3,7 @@ const errorHandlerMiddleware = require('./middleware/errorHandler');
 const routes = require('./routes');
 const db = require('./database');
 const logger = require('./helpers/logger');
+const config = require('./config');
 
 // create server
 const app = express();
@@ -13,13 +14,17 @@ routes(app);
 // handle error
 app.use(errorHandlerMiddleware);
 
-// sync db and start the server
-db.sequelize.sync()
-  .then(() => {
-    return app.listen(8080, () => {
-      logger.info('donna api is listening on port 8080!')
+module.exports = (async () => {
+  try {
+    const { port } = config.server;
+
+    // sync db and start the server
+    await db.sequelize.sync();
+
+    return app.listen(port, () => {
+      logger.info(`donna api is listening on port ${port}!`)
     });
-  })
-  .catch(function(err) {
+  } catch (err) {
     logger.info('Server failed to start due to error: %s', err);
-  });
+  }
+})();
