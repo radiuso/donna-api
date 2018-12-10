@@ -7,16 +7,19 @@ class ProductsOrderService extends BaseService {
   constructor() {
     super('productsOrder', productsOrderDAL);
 
-    this.findAllByOrderIdLoader = new DataLoader(
-      (orderIds) =>  {
-        const res = productsOrderDAL.findAllByOrderId(orderIds);
-        return res.then(data => {
-          const group = groupBy(data, (po) => po.orderId);
+    this.findAllByOrderIdLoader = new DataLoader(async (orderIds) => {
+        const data = await productsOrderDAL.findAllByOrderId(orderIds);
+        const group = groupBy(data, (po) => po.orderId);
 
-          return group;
-        });
-      }
-    );
+        console.log(data);
+        const res = [];
+
+        orderIds.forEach(orderId => {
+          res.push(group[orderId]);
+        })
+
+        return res;
+    });
 
     this.sumOrdersProductsPricesLoader = new DataLoader(async (orderIds) => {
       const data = await productsOrderDAL.sumOrdersProductsPrices(orderIds);
