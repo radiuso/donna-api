@@ -27,6 +27,7 @@ module.exports = (app) => {
     graphiql: env === 'development',
     context: {
       request,
+      token: request.headers.authorization || '',
     },
     formatError: error => ({
       message: error.message,

@@ -5,35 +5,29 @@ describe('Order integration', () => {
   before(async () => await integrationServer.start());
   after(async () => await integrationServer.stop());
 
-  // it('Should resolve the first order', async () => {
-  //   const response = await integrationServer.graphqlQuery(`{
-  //     login(username: "admin@donna.com", password: "securepwd") {
-  //       token
-  //     },
-  //     order(id: 1) { id }
-  //   }`);
+  it('Should resolve the first order', async () => {
+    const response = await integrationServer.graphqlQuery(`{
+      order(id: 1) { id }
+    }`);
 
-  //   expect(response.statusCode).to.equal(200);
-  //   expect(response.body.data.order).to.have.deep.equals({
-  //     id: 1,
-  //   });
-  // });
+    expect(response.statusCode).to.equal(200);
+    expect(response.body.data.order).to.have.deep.equals({
+      id: 1,
+    });
+  });
 
-  // it('Should return null as order', async () => {
-  //   try {
-  //     const response = await integrationServer.graphqlQuery(`{
-  //       login(username: "admin@donna.com", password: "securepwd") {
-  //         token
-  //       },
-  //       order(id: 0) { id }
-  //     }`);
+  it('Should return null as order', async () => {
+    try {
+      const response = await integrationServer.graphqlQuery(`{
+        order(id: 0) { id }
+      }`);
 
-  //     expect(response.statusCode).to.equal(200);
-  //     expect(response.body.data.order).to.equal(null);
-  //   } catch (ex) {
-  //     assert.fail(ex);
-  //   }
-  // });
+      expect(response.statusCode).to.equal(200);
+      expect(response.body.data.order).to.equal(null);
+    } catch (ex) {
+      assert.fail(ex);
+    }
+  });
 
   it('Should create an Order for the first customer', async () => {
     const date = new Date();

@@ -14,7 +14,13 @@ const signToken = (id, user) => {
 };
 
 const decodeToken = (token) => {
-  return jwt.verify(token, secrets.token);
+  try {
+    return jwt.verify(token, secrets.token);
+  } catch (ex) {
+    console.error(ex);
+  }
+
+  return null;
 };
 
 class AuthService {
@@ -34,13 +40,12 @@ class AuthService {
     })
     .then((user) => {
       const token = signToken(user.id, user);
-      const decoded = decodeToken(token);
 
       if (context) {
         context.token = token;
       }
 
-      authEmitter.emit('login_success', decoded);
+      authEmitter.emit('login_success', user);
 
       return {
         token,
@@ -81,21 +86,20 @@ class AuthService {
 
   checkAuthentication(context) {
     return new Promise((resolve, reject) => {
-      if (context) {
-        if (context.inProgress) {
-          authEmitter.on('login_success', (user) => {
-            resolve(user);
-          });
-
-          authEmitter.on('login_error', () => {
-            return reject('no rights');
-          });
-        } else {
-          resolve(decodeToken(context.token));
-        }
-      } else {
+      if (!context) {
         return reject('no context');
       }
+      if (!context.inProgress && context.token) {
+        return resolve(decodeToken(context.token));
+      }
+
+      authEmitter.on('login_success', (user) => {
+        return resolve(user);
+      });
+
+      authEmitter.on('login_error', () => {
+        return reject('no rights');
+      });
     });
   }
 }
