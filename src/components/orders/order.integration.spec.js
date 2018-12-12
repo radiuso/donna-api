@@ -44,6 +44,9 @@ describe('Order integration', () => {
             }
             productsOrder {
               productId
+              quantity
+              unitPrice
+              unit
             }
           }
         }
@@ -61,17 +64,16 @@ describe('Order integration', () => {
       });
 
       expect(response.statusCode).to.equal(200);
-      expect(response.body.data.createOrder).to.have.deep.equals({
-        order: {
-          targetDate: isoDate,
-          customer: {
-            id: 1
-          },
-          productsOrder: [{
-            productId: 1,
-          }],
-        },
-      });
+
+      const order = response.body.data.createOrder.order;
+      expect(order.targetDate).to.be.equals(isoDate, 'Target Date');
+      expect(order.customer.id).to.be.equals(1, 'Customer Id');
+      expect(order.productsOrder).to.have.deep.equals([{
+        productId: 1,
+        quantity: 2,
+        unitPrice: 12.3,
+        unit: 'Unité',
+      }]);
     } catch (ex) {
       assert.fail(ex);
     }
