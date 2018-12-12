@@ -1,4 +1,5 @@
 const BaseSchema = require('../base_component/BaseSchema');
+const productsService = require('../products/productsService');
 
 class ProductsOrderSchema extends BaseSchema {
   get definition() {
@@ -8,7 +9,8 @@ class ProductsOrderSchema extends BaseSchema {
         productId: Int!
         quantity: Int!
         unitPrice: Float!
-        unit: String
+        unit: String!
+        product: Product!
       }
 
       input ProductsOrderInput {
@@ -21,7 +23,11 @@ class ProductsOrderSchema extends BaseSchema {
   }
 
   get resolvers() {
-    return {};
+    return {
+      ProductsOrder: {
+        product: (obj, ctx) => productsService.findByIdLoader.load(obj.productId),
+      },
+    };
   }
 }
 
