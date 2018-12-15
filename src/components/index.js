@@ -4,6 +4,7 @@ const OrderSchema = require('./orders/orderSchema');
 const ProductSchema = require('./products/productSchema');
 const ProductsOrderSchema = require('./productsOrder/productsOrderSchema');
 const UserSchema = require('./users/userSchema');
+const CategorySchema = require('./categories/categorySchema');
 
 module.exports = [
   AuthSchema,
@@ -12,4 +13,5 @@ module.exports = [
   OrderSchema,
   ProductSchema,
   UserSchema,
+  CategorySchema,
 ];

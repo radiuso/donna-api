@@ -13,9 +13,8 @@ class ProductsOrderService extends BaseService {
         const res = [];
 
         orderIds.forEach(orderId => {
-          res.push(group[orderId] || {});
+          res.push(group[orderId] || []);
         })
-
         return res;
     });
 
