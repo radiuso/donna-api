@@ -37,5 +37,9 @@ module.exports = {
       truncate: false,
       numberOfElements: 250,
     },
+    categories: {
+      truncate: false,
+      numberOfElements: 4,
+    },
   },
 };

@@ -11,9 +11,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Category.associate = (models) => {
-    Category.hasMany(models.Product, { as: 'Products' });
-  };
-
   return Category;
 }

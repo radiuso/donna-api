@@ -1,17 +1,21 @@
-const faker = require('faker');
 const logger = require ('../../helpers/logger');
 const { Category } = require('../../database');
 const DAL = require('./categoryDAL');
 
 const createElements = async (numberOfElements) => {
-  const elements = [];
-
-  for(let i = 0; i < numberOfElements; ++i) {
-    elements.push({
-      id: i + 1,
-      label: faker.commerce.product,
-    });
-  }
+  const elements = [{
+    id: 1,
+    label: 'Boulangerie',
+  }, {
+    id: 2,
+    label: 'Patisserie',
+  }, {
+    id: 3,
+    label: 'Restauration',
+  }, {
+    id: 4,
+    label: 'Alcool',
+  }];
 
   await Category.bulkCreate(elements);
   logger.info(`${numberOfElements} Categories inserted`);

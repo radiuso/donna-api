@@ -6,6 +6,7 @@ const customersSeed = require('../components/customers/customersSeed');
 const ordersSeed = require('../components/orders/ordersSeed');
 const productsSeed = require('../components/products/productsSeed');
 const productsOrderSeed = require('../components/productsOrder/productsOrderSeed');
+const categorySeed = require('../components/categories/categorySeed');
 
 const seed = async () => {
   try {
@@ -16,6 +17,7 @@ const seed = async () => {
       customersSeed(config.seed.customers),
       ordersSeed(config.seed.orders, config.seed.customers),
       productsSeed(config.seed.products),
+      categorySeed(config.seed.categories),
     ]);
 
     // More seeds that require IDs from the seeds above
@@ -23,7 +25,8 @@ const seed = async () => {
 
     logger.info(`The database for the "${config.env}" environment is now seeded`);
   } catch(err) {
-      logger.error(err);
+    console.log(err);
+    logger.error(err);
   }
 };
 

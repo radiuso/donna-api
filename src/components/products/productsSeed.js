@@ -13,7 +13,7 @@ const createElements = async (numberOfElements) => {
       id: i + 1,
       label: faker.commerce.productName(),
       description: faker.commerce.productAdjective(),
-      category: faker.random.number({ min: 1, max: 4 }),
+      categoryId: faker.random.number({ min: 1, max: 4 }),
       unitPrice: faker.commerce.price(1, 30, 1),
       unit: faker.random.arrayElement(units),
     });

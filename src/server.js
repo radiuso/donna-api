@@ -25,6 +25,7 @@ module.exports = (async () => {
       logger.info(`donna api is listening on port ${port}!`)
     });
   } catch (err) {
-    logger.info('Server failed to start due to error: %s', err);
+    console.error(err);
+    logger.error('Server failed to start due to error: %s', err);
   }
 })();

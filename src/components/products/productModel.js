@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true
     },
-    category: {
+    categoryId: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
@@ -30,6 +30,7 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Product.associate = (models) => {
+    Product.hasOne(models.Category);
     Product.belongsToMany(models.Order, { through: models.ProductsOrder });
   };
 
